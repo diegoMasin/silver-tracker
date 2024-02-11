@@ -1,0 +1,7 @@
+Django
+django-extensions
+python-decouple
+requests
+django-filter
+djangorestframework
+Markdown

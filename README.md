@@ -1,26 +1,33 @@
 ![Alt text](https://raw.githubusercontent.com/diegoMasin/landing-maximumtech/master/assets/img/new-logo-mt-01.png)
 <br><br>
 
-# Django + Django Rest Framework (Template)
+# Silver Tracker
 
-###### Preparing a template for Django Rest Framework.
+###### Basic control of the sale of jewelry and semi-jewelry.
 
 ## Requirements
 
-- Python (choose your version)
+- Python 3.10.11
 
 ## Install Project
 
 ```
-- on this template repository, click on 'Use this template'
-- clone the new repository
+- clone repository
 - cd <project-folder>
 - python -m venv .venv
 - source .venv/bin/activate
-- change the requirements.txt file if you don't want to get the latest versions
 - pip install -r requirements.txt
-- change file putting installed versions to fix versions.
 - python contrib/env_gen.py
+- change .env file mainly if be use another database
+-- not forget create database, change settings.py and add lib in requirements.txt if needed
 - python manage.py migrate
 - python manage.py createsuperuser --username="admin" --email=""
+- python manage.py runserver
+```
+
+## More info
+
+```
+- Main goals is to use django-admin
+- Have DRF for future possibility to use this project as only backend
 ```

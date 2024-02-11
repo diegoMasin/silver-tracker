@@ -1,7 +1,8 @@
-Django
-django-extensions
+Django==5.0.2
+django-extensions==3.2.3
 python-decouple
-requests
-django-filter
-djangorestframework
-Markdown
+requests==2.31.0
+django-filter==23.5
+djangorestframework==3.14.0
+Markdown==3.5.2
+psycopg2==2.9.9

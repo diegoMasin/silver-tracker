@@ -24,6 +24,7 @@ class EntradaProduto(models.Model):
     observacao = models.TextField(blank=True, null=True)
     produto = models.ForeignKey(Produto, on_delete=models.CASCADE)
     quantidade = models.IntegerField()
+    data_cadastro = models.DateTimeField(auto_now_add=True)
 
     def save(self, *args, **kwargs):
         # Gera o código da entrada automaticamente

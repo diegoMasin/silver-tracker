@@ -1,5 +1,6 @@
 from django.contrib import admin
 
+from .models.carrinho_compra import CarrinhoCompra, ItemCarrinho
 from .models.entrada_produto import EntradaProduto
 from .models.pessoa import Pessoa
 from .models.produto import Produto
@@ -53,3 +54,17 @@ class EntradaProdutoAdmin(admin.ModelAdmin):
     search_fields = ['codigo_entrada', 'nf',
                      'fornecedor__nome', 'produto__nome_produto']
     readonly_fields = ['codigo_entrada']
+
+
+# @admin.register(ItemCarrinho)
+class ItemCarrinhoInline(admin.TabularInline):
+    model = ItemCarrinho
+    extra = 1  # Permite adicionar vários itens por vez
+    readonly_fields = ['total_parcial']
+
+
+@admin.register(CarrinhoCompra)
+class CarrinhoCompraAdmin(admin.ModelAdmin):
+    list_display = ['cliente', 'total', 'desconto']
+    inlines = [ItemCarrinhoInline]
+    readonly_fields = ['total']

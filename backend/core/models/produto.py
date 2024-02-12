@@ -21,7 +21,7 @@ class Produto(models.Model):
     nome_produto = models.CharField(max_length=255)
     unidade = models.CharField(
         max_length=10, choices=UNIDADE_CHOICES, blank=True, null=True)
-    tipo = models.CharField(choices=TIPO_CHOICES)
+    tipo = models.CharField(max_length=20, choices=TIPO_CHOICES)
     preco_custo = models.DecimalField(max_digits=10, decimal_places=2)
     preco_venda = models.DecimalField(max_digits=10, decimal_places=2)
     margem = models.DecimalField(

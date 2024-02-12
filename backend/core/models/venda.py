@@ -12,7 +12,7 @@ from .produto import Produto
 
 class ItemVenda(models.Model):
     carrinho = models.ForeignKey(
-        'Vendas', related_name='itens', on_delete=models.CASCADE)
+        'Venda', related_name='itens', on_delete=models.CASCADE)
     produto = models.ForeignKey(Produto, on_delete=models.CASCADE)
     quantidade = models.PositiveIntegerField()
     total_parcial = models.DecimalField(max_digits=10, decimal_places=2)
@@ -35,7 +35,7 @@ class ItemVenda(models.Model):
         return f"{self.produto} - {self.quantidade}"
 
     class Meta:
-        db_table = 'item_carrinho'
+        db_table = 'item_venda'
 
 
 @receiver(pre_delete, sender=ItemVenda)
@@ -44,7 +44,7 @@ def excluir_item_carrinho(sender, instance, **kwargs):
     instance.produto.atualizar_saldo_estoque(instance.quantidade)
 
 
-class Vendas(models.Model):
+class Venda(models.Model):
     TIPO_CHOICES = [
         ('pix', 'Pix'),
         ('debito', 'Débito'),
@@ -85,4 +85,4 @@ class Vendas(models.Model):
         self.save()
 
     class Meta:
-        db_table = 'vendas'
+        db_table = 'venda'

@@ -3,7 +3,7 @@ from django.contrib import admin
 from .models.entrada_produto import EntradaProduto
 from .models.pessoa import Pessoa
 from .models.produto import Produto
-from .models.vendas import ItemVenda, Vendas
+from .models.venda import ItemVenda, Venda
 
 
 @admin.register(Pessoa)
@@ -71,8 +71,8 @@ class ItemVendaInline(admin.TabularInline):
     readonly_fields = ['total_parcial']
 
 
-@admin.register(Vendas)
-class VendasAdmin(admin.ModelAdmin):
+@admin.register(Venda)
+class VendaAdmin(admin.ModelAdmin):
     list_display = ['cliente', 'forma_pagamento',
                     'desconto_maquina', 'total', 'desconto', 'total_pago', 'data_cadastro']
     list_filter = ['forma_pagamento']
@@ -83,5 +83,5 @@ class VendasAdmin(admin.ModelAdmin):
         ('Detalhes da Venda', {
             'fields': ('cliente', 'forma_pagamento', 'data_cadastro', 'desconto',
                        'desconto_maquina', 'total', 'total_pago')
-        })
+        }),
     )

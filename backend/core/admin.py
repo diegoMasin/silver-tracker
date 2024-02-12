@@ -1,5 +1,6 @@
 from django.contrib import admin
 
+from .models.entrada_produto import EntradaProduto
 from .models.pessoa import Pessoa
 from .models.produto import Produto
 
@@ -42,3 +43,13 @@ class ProdutoAdmin(admin.ModelAdmin):
             'fields': ('unidade', 'preco_custo', 'preco_venda', 'margem', 'saldo_estoque')
         }),
     )
+
+
+@admin.register(EntradaProduto)
+class EntradaProdutoAdmin(admin.ModelAdmin):
+    list_display = ['codigo_entrada', 'tipo_movimento',
+                    'nf', 'fornecedor', 'produto', 'quantidade']
+    list_filter = ['tipo_movimento', 'fornecedor', 'produto']
+    search_fields = ['codigo_entrada', 'nf',
+                     'fornecedor__nome', 'produto__nome_produto']
+    readonly_fields = ['codigo_entrada']

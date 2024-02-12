@@ -26,6 +26,10 @@ class Produto(models.Model):
         self.codigo = self.codigo.upper() if self.codigo else self.codigo
         super().save(*args, **kwargs)
 
+    def atualizar_saldo_estoque(self, quantidade: int):
+        self.saldo_estoque += quantidade
+        self.save()
+
     def __str__(self):
         return f"{self.nome_produto} - {self.codigo}"
 

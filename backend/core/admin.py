@@ -1,3 +1,26 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models.pessoa import Pessoa
+
+
+@admin.register(Pessoa)
+class PessoaAdmin(admin.ModelAdmin):
+    list_display = ['nome', 'tipo', 'telefone', 'email',
+                    'cnpj', 'cpf', 'endereco', 'observacoes']
+    list_filter = ['tipo']
+    search_fields = ['nome', 'cnpj', 'cpf', 'email']
+
+    fieldsets = (
+        ('Informações Básicas', {
+            'fields': ('nome', 'tipo')
+        }),
+        ('Contato', {
+            'fields': ('telefone', 'email')
+        }),
+        ('Documentos', {
+            'fields': ('cnpj', 'cpf')
+        }),
+        ('Endereço e Observações', {
+            'fields': ('endereco', 'observacoes')
+        }),
+    )

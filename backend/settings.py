@@ -35,10 +35,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # third party apps
     'django_extensions',
+    'django_cpf_cnpj',
     # here
     # my apps
     'backend.core'
-
 ]
 
 MIDDLEWARE = [

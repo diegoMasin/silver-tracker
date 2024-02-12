@@ -22,6 +22,8 @@
 -- not forget create database, change settings.py and add lib in requirements.txt if needed
 - python manage.py migrate
 - python manage.py createsuperuser --username="admin" --email=""
+- python manage.py collectstatic
+-- https://django-grappelli.readthedocs.io/en/latest/quickstart.html#installation
 - python manage.py runserver
 ```
 

@@ -17,8 +17,8 @@ class Pessoa(models.Model):
     endereco = models.CharField(blank=True, null=True)
     observacoes = models.TextField(max_length=500, blank=True, null=True)
 
+    def __str__(self):
+        return str(self.nome)
+
     class Meta:
         db_table = 'pessoa'
-
-    def __str__(self):
-        return self.nome

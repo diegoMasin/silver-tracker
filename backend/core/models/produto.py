@@ -7,10 +7,21 @@ class Produto(models.Model):
         ('par', 'Par'),
     ]
 
+    TIPO_CHOICES = [
+        ('anel', 'Anel'),
+        ('colar', 'Colar'),
+        ('brinco', 'Brinco'),
+        ('cordao', 'Cordão'),
+        ('tornozeleira', 'Tornozeleira'),
+        ('pulseira', 'Pulseira'),
+        ('outros', 'Outros'),
+    ]
+
     codigo = models.CharField(max_length=20, unique=True)
     nome_produto = models.CharField(max_length=255)
     unidade = models.CharField(
         max_length=10, choices=UNIDADE_CHOICES, blank=True, null=True)
+    tipo = models.CharField(choices=TIPO_CHOICES)
     preco_custo = models.DecimalField(max_digits=10, decimal_places=2)
     preco_venda = models.DecimalField(max_digits=10, decimal_places=2)
     margem = models.DecimalField(
@@ -28,6 +39,9 @@ class Produto(models.Model):
 
     def atualizar_saldo_estoque(self, quantidade: int):
         self.saldo_estoque += quantidade
+        if self.saldo_estoque < 0:
+            raise ValueError(
+                f"Não há estoque o suficiente! O estoque não pode ficar com: {self.saldo_estoque}")
         self.save()
 
     def __str__(self):

@@ -9,7 +9,7 @@ from .models.produto import Produto
 @admin.register(Pessoa)
 class PessoaAdmin(admin.ModelAdmin):
     list_display = ['nome', 'tipo', 'telefone', 'email',
-                    'cnpj', 'cpf', 'endereco', 'observacoes']
+                    'cnpj', 'cpf']
     list_filter = ['tipo']
     search_fields = ['nome', 'cnpj', 'cpf', 'email']
 
@@ -31,9 +31,10 @@ class PessoaAdmin(admin.ModelAdmin):
 
 @admin.register(Produto)
 class ProdutoAdmin(admin.ModelAdmin):
-    list_display = ['codigo', 'nome_produto', 'unidade',
+    list_display = ['codigo', 'nome_produto',
                     'preco_custo', 'preco_venda', 'margem', 'saldo_estoque']
-    search_fields = ['codigo', 'nome_produto']
+    list_filter = ['tipo']
+    search_fields = ['codigo', 'nome_produto', 'preco_venda']
     readonly_fields = ['margem', 'saldo_estoque']
 
     fieldsets = (
@@ -48,12 +49,20 @@ class ProdutoAdmin(admin.ModelAdmin):
 
 @admin.register(EntradaProduto)
 class EntradaProdutoAdmin(admin.ModelAdmin):
-    list_display = ['codigo_entrada', 'tipo_movimento',
-                    'nf', 'fornecedor', 'produto', 'quantidade']
+    list_display = ['codigo_entrada', 'produto', 'tipo_movimento',
+                    'fornecedor', 'quantidade']
     list_filter = ['tipo_movimento', 'fornecedor', 'produto']
     search_fields = ['codigo_entrada', 'nf',
                      'fornecedor__nome', 'produto__nome_produto']
     readonly_fields = ['codigo_entrada']
+    fieldsets = (
+        ('Informações Básicas', {
+            'fields': ('codigo_entrada', 'tipo_movimento')
+        }),
+        ('Detalhes da Entrada de Produto', {
+            'fields': ('fornecedor', 'produto', 'nf', 'quantidade', 'observacao')
+        }),
+    )
 
 
 # @admin.register(ItemCarrinho)
@@ -65,6 +74,15 @@ class ItemCarrinhoInline(admin.TabularInline):
 
 @admin.register(CarrinhoCompra)
 class CarrinhoCompraAdmin(admin.ModelAdmin):
-    list_display = ['cliente', 'total', 'desconto']
+    list_display = ['cliente', 'forma_pagamento',
+                    'desconto_maquina', 'total', 'desconto', 'total_pago']
+    list_filter = ['forma_pagamento']
+    earch_fields = ['cliente__nome', 'total', 'total_pago']
     inlines = [ItemCarrinhoInline]
-    readonly_fields = ['total']
+    readonly_fields = ['total', 'total_pago']
+    fieldsets = (
+        ('Detalhes da Venda', {
+            'fields': ('cliente', 'forma_pagamento', 'desconto',
+                       'desconto_maquina', 'total', 'total_pago')
+        })
+    )

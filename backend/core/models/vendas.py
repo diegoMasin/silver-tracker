@@ -10,9 +10,9 @@ from .pessoa import Pessoa
 from .produto import Produto
 
 
-class ItemCarrinho(models.Model):
+class ItemVenda(models.Model):
     carrinho = models.ForeignKey(
-        'CarrinhoCompra', related_name='itens', on_delete=models.CASCADE)
+        'Vendas', related_name='itens', on_delete=models.CASCADE)
     produto = models.ForeignKey(Produto, on_delete=models.CASCADE)
     quantidade = models.PositiveIntegerField()
     total_parcial = models.DecimalField(max_digits=10, decimal_places=2)
@@ -22,7 +22,7 @@ class ItemCarrinho(models.Model):
         #     raise ValueError("A quantidade é superior ao estoque no momento!")
         self.total_parcial = self.produto.preco_venda * self.quantidade
         if self.pk:
-            old_item = ItemCarrinho.objects.get(pk=self.pk)
+            old_item = ItemVenda.objects.get(pk=self.pk)
             diferenca_quantidade = old_item.quantidade - self.quantidade
             self.produto.atualizar_saldo_estoque(diferenca_quantidade)
             self.carrinho.atualizar_total(old_item.total_parcial * -1)
@@ -38,13 +38,13 @@ class ItemCarrinho(models.Model):
         db_table = 'item_carrinho'
 
 
-@receiver(pre_delete, sender=ItemCarrinho)
+@receiver(pre_delete, sender=ItemVenda)
 def excluir_item_carrinho(sender, instance, **kwargs):
     instance.carrinho.atualizar_total(instance.total_parcial * -1)
     instance.produto.atualizar_saldo_estoque(instance.quantidade)
 
 
-class CarrinhoCompra(models.Model):
+class Vendas(models.Model):
     TIPO_CHOICES = [
         ('pix', 'Pix'),
         ('debito', 'Débito'),
@@ -84,4 +84,4 @@ class CarrinhoCompra(models.Model):
         self.save()
 
     class Meta:
-        db_table = 'carrinho_compra'
+        db_table = 'vendas'

@@ -1,9 +1,9 @@
 from django.contrib import admin
 
-from .models.carrinho_compra import CarrinhoCompra, ItemCarrinho
 from .models.entrada_produto import EntradaProduto
 from .models.pessoa import Pessoa
 from .models.produto import Produto
+from .models.vendas import ItemVenda, Vendas
 
 
 @admin.register(Pessoa)
@@ -65,20 +65,19 @@ class EntradaProdutoAdmin(admin.ModelAdmin):
     )
 
 
-# @admin.register(ItemCarrinho)
-class ItemCarrinhoInline(admin.TabularInline):
-    model = ItemCarrinho
+class ItemVendaInline(admin.TabularInline):
+    model = ItemVenda
     extra = 1  # Permite adicionar vários itens por vez
     readonly_fields = ['total_parcial']
 
 
-@admin.register(CarrinhoCompra)
-class CarrinhoCompraAdmin(admin.ModelAdmin):
+@admin.register(Vendas)
+class VendasAdmin(admin.ModelAdmin):
     list_display = ['cliente', 'forma_pagamento',
                     'desconto_maquina', 'total', 'desconto', 'total_pago']
     list_filter = ['forma_pagamento']
     earch_fields = ['cliente__nome', 'total', 'total_pago']
-    inlines = [ItemCarrinhoInline]
+    inlines = [ItemVendaInline]
     readonly_fields = ['total', 'total_pago']
     fieldsets = (
         ('Detalhes da Venda', {

@@ -63,7 +63,7 @@ class Venda(models.Model):
         max_digits=5, decimal_places=2, blank=True, null=True)
     total_pago = models.DecimalField(
         max_digits=5, decimal_places=2, default=0.00, validators=[MinValueValidator(0)])
-    data_cadastro = models.DateTimeField(auto_now_add=True)
+    data_cadastro = models.DateTimeField(blank=True, null=True)
 
     def __str__(self):
         data_atual = datetime.now().strftime('%d/%m/%Y')
@@ -76,6 +76,8 @@ class Venda(models.Model):
             Decimal(str(self.desconto))
         if self.total_pago < 0:
             raise ValueError("O total a ser pago não pode ser negativo.")
+        if not self.data_cadastro:
+            self.data_cadastro = datetime.now()
         super().save(*args, **kwargs)
 
     def atualizar_total(self, valor: Decimal):

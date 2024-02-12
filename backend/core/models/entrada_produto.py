@@ -24,7 +24,7 @@ class EntradaProduto(models.Model):
     observacao = models.TextField(blank=True, null=True)
     produto = models.ForeignKey(Produto, on_delete=models.CASCADE)
     quantidade = models.IntegerField()
-    data_cadastro = models.DateTimeField(auto_now_add=True)
+    data_cadastro = models.DateTimeField(blank=True, null=True)
 
     def save(self, *args, **kwargs):
         # Gera o código da entrada automaticamente
@@ -41,6 +41,9 @@ class EntradaProduto(models.Model):
         if not self.fornecedor and self.tipo_movimento == 'compra':
             raise ValidationError(
                 "O fornecedor é obrigatório para entradas do tipo 'compra'.")
+
+        if not self.data_cadastro:
+            self.data_cadastro = datetime.now()
 
         super().save(*args, **kwargs)
 

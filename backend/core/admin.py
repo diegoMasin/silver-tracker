@@ -42,7 +42,10 @@ class ProdutoAdmin(admin.ModelAdmin):
             'fields': ('codigo', 'nome_produto')
         }),
         ('Detalhes do Produto', {
-            'fields': ('unidade', 'preco_custo', 'preco_venda', 'margem', 'saldo_estoque')
+            'fields': ('tipo', 'unidade', 'saldo_estoque')
+        }),
+        ('Precificação', {
+            'fields': ('preco_custo', 'preco_venda', 'margem')
         }),
     )
 
@@ -54,7 +57,7 @@ class EntradaProdutoAdmin(admin.ModelAdmin):
     list_filter = ['tipo_movimento', 'fornecedor', 'produto']
     search_fields = ['codigo_entrada', 'nf',
                      'fornecedor__nome', 'produto__nome_produto']
-    readonly_fields = ['codigo_entrada']
+    readonly_fields = ['codigo_entrada', 'data_cadastro']
     fieldsets = (
         ('Informações Básicas', {
             'fields': ('codigo_entrada', 'tipo_movimento', 'data_cadastro')
@@ -78,7 +81,7 @@ class VendaAdmin(admin.ModelAdmin):
     list_filter = ['forma_pagamento']
     earch_fields = ['cliente__nome', 'total', 'total_pago']
     inlines = [ItemVendaInline]
-    readonly_fields = ['total', 'total_pago']
+    readonly_fields = ['total', 'total_pago', 'data_cadastro']
     fieldsets = (
         ('Detalhes da Venda', {
             'fields': ('cliente', 'forma_pagamento', 'data_cadastro', 'desconto',

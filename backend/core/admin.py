@@ -67,6 +67,12 @@ class EntradaProdutoAdmin(admin.ModelAdmin):
         }),
     )
 
+    def get_readonly_fields(self, request, obj=None):
+        # Se o objeto (produto) já existe, torna todos os campos readonly
+        if obj:
+            return self.readonly_fields + ['quantidade']
+        return self.readonly_fields
+
 
 class ItemVendaInline(admin.TabularInline):
     model = ItemVenda

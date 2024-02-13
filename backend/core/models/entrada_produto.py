@@ -35,7 +35,7 @@ class EntradaProduto(models.Model):
             self.codigo_entrada = f"{tipo_inicial}{mes_ano_atual} - {self.produto.codigo}"
 
         # Atualiza o saldo_estoque do produto
-        if self.produto:
+        if self.produto and not self.pk:
             self.produto.atualizar_saldo_estoque(self.quantidade)
 
         if not self.fornecedor and self.tipo_movimento == 'compra':

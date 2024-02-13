@@ -41,6 +41,10 @@ class ItemVenda(models.Model):
 @receiver(pre_delete, sender=ItemVenda)
 def excluir_item_carrinho(sender, instance, **kwargs):
     instance.carrinho.atualizar_total(instance.total_parcial * -1)
+    if instance.carrinho.total == 0:
+        instance.carrinho.desconto = 0
+        instance.carrinho.total_pago = 0
+        instance.carrinho.save()
     instance.produto.atualizar_saldo_estoque(instance.quantidade)
 
 
@@ -72,8 +76,9 @@ class Venda(models.Model):
     def save(self, *args, **kwargs):
         # Atualiza o total pago ao salvar (no futuro incluir o cálculo do desconto da maquina)
         # total pago sempre significará o valor real exato recebido na conta (ou carteira)
-        self.total_pago = Decimal(str(self.total)) - \
-            Decimal(str(self.desconto))
+        if self.total > 0:
+            self.total_pago = Decimal(str(self.total)) - \
+                Decimal(str(self.desconto))
         if self.total_pago < 0:
             raise ValueError("O total a ser pago não pode ser negativo.")
         if not self.data_cadastro:

@@ -2,6 +2,8 @@ from datetime import datetime
 
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.db.models.signals import pre_delete
+from django.dispatch import receiver
 
 from .pessoa import Pessoa
 from .produto import Produto
@@ -52,3 +54,8 @@ class EntradaProduto(models.Model):
 
     class Meta:
         db_table = 'entrada_produto'
+
+
+@receiver(pre_delete, sender=EntradaProduto)
+def excluir_entrada_produto(sender, instance, **kwargs):
+    instance.produto.atualizar_saldo_estoque(instance.quantidade * -1)

@@ -9,11 +9,12 @@ class Produto(models.Model):
 
     TIPO_CHOICES = [
         ('anel', 'Anel'),
-        ('colar', 'Colar'),
         ('brinco', 'Brinco'),
+        ('colar', 'Colar'),
         ('cordao', 'Cordão'),
-        ('tornozeleira', 'Tornozeleira'),
+        ('pingente', 'Pingente'),
         ('pulseira', 'Pulseira'),
+        ('tornozeleira', 'Tornozeleira'),
         ('outros', 'Outros'),
     ]
 

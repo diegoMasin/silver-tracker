@@ -32,8 +32,8 @@ class PessoaAdmin(admin.ModelAdmin):
 @admin.register(Produto)
 class ProdutoAdmin(admin.ModelAdmin):
     list_display = ['codigo', 'nome_produto',
-                    'preco_custo', 'preco_venda', 'margem', 'saldo_estoque']
-    list_filter = ['tipo']
+                    'preco_custo', 'preco_venda', 'margem', 'saldo_estoque', 'esta_ativo']
+    list_filter = ['tipo', 'esta_ativo']
     search_fields = ['codigo', 'nome_produto', 'preco_venda']
     readonly_fields = ['margem', 'saldo_estoque']
 
@@ -42,7 +42,7 @@ class ProdutoAdmin(admin.ModelAdmin):
             'fields': ('codigo', 'nome_produto')
         }),
         ('Detalhes do Produto', {
-            'fields': ('tipo', 'unidade', 'saldo_estoque')
+            'fields': ('tipo', 'unidade', 'saldo_estoque', 'esta_ativo')
         }),
         ('Precificação', {
             'fields': ('preco_custo', 'preco_venda', 'margem')
@@ -83,14 +83,14 @@ class ItemVendaInline(admin.TabularInline):
 @admin.register(Venda)
 class VendaAdmin(admin.ModelAdmin):
     list_display = ['cliente', 'forma_pagamento',
-                    'desconto_maquina', 'total', 'desconto', 'total_pago', 'data_cadastro']
-    list_filter = ['forma_pagamento']
+                    'desconto_maquina', 'total', 'desconto', 'total_pago', 'foi_pago', 'data_cadastro']
+    list_filter = ['forma_pagamento', 'foi_pago']
     earch_fields = ['cliente__nome', 'total', 'total_pago']
     inlines = [ItemVendaInline]
     readonly_fields = ['total', 'total_pago']
     fieldsets = (
         ('Detalhes da Venda', {
             'fields': ('cliente', 'forma_pagamento', 'data_cadastro', 'desconto',
-                       'desconto_maquina', 'total', 'total_pago')
+                       'desconto_maquina', 'total', 'total_pago', 'foi_pago')
         }),
     )

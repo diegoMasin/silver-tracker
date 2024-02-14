@@ -28,6 +28,7 @@ class Produto(models.Model):
     margem = models.DecimalField(
         max_digits=5, decimal_places=2, blank=True, null=True)
     saldo_estoque = models.IntegerField(default=0)
+    esta_ativo = models.BooleanField(default=True)
 
     def save(self, *args, **kwargs):
         # Calcula automaticamente a margem de lucro ao salvar

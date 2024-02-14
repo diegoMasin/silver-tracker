@@ -67,6 +67,7 @@ class Venda(models.Model):
         max_digits=5, decimal_places=2, blank=True, null=True)
     total_pago = models.DecimalField(
         max_digits=5, decimal_places=2, default=0.00, validators=[MinValueValidator(0)])
+    foi_pago = models.BooleanField(default=True)
     data_cadastro = models.DateTimeField(blank=True, null=True)
 
     def __str__(self):

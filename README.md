@@ -23,7 +23,7 @@
 - python manage.py migrate
 - python manage.py createsuperuser --username="admin" --email=""
 - python manage.py collectstatic
--- https://django-grappelli.readthedocs.io/en/latest/quickstart.html#installation
+-- https://pypi.org/project/django-adminlte-3/
 - python manage.py runserver
 ```
 

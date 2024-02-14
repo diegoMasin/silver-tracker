@@ -7,6 +7,6 @@ djangorestframework==3.14.0
 Markdown==3.5.2
 psycopg2==2.9.9
 django-cpf-cnpj==1.0.0
-django-grappelli==3.0.8
 whitenoise
 gunicorn==20.1.0
+django-adminlte3

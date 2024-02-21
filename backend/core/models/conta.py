@@ -59,17 +59,20 @@ class Conta(models.Model):
         return total_vendido if total_vendido is not None else 0.0
 
     def calcular_lucro_total(self):
-        return self.total_vendido - self.total_gastos
+        return Decimal(str(self.total_vendido)) - Decimal(str(self.total_gastos))
 
     def calcular_lucro_livre(self):
-        return self.lucro_total - self.total_investido
+        return Decimal(str(self.lucro_total)) - Decimal(str(self.total_investido))
 
     def calcular_investimento_amortizado(self):
         lucro_livre = self.calcular_lucro_livre()
         return lucro_livre >= Decimal('0.00')
 
     def calcular_parcial_conta(self):
-        return self.total_investido - self.total_gastos + self.total_vendido
+        total_investido = Decimal(str(self.total_investido))
+        total_gastos = Decimal(str(self.total_gastos))
+        total_vendido = Decimal(str(self.total_vendido))
+        return total_investido - total_gastos + total_vendido
 
     def __str__(self):
         return f"{self.nome_conta}"

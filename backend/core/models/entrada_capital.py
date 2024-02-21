@@ -22,12 +22,13 @@ class EntradaCapital(models.Model):
     valor_entrada = models.DecimalField(max_digits=10, decimal_places=2)
     data_entrada = models.DateTimeField(blank=True, null=True)
 
+    def save(self, *args, **kwargs):
+        if not self.data_entrada:
+            self.data_entrada = datetime.now()
+        super().save(*args, **kwargs)
+
     class Meta:
         db_table = 'entrada_capital'
 
     def __str__(self):
         return f"{self.tipo_entrada} - {self.valor_entrada}"
-
-    def save(self, *args, **kwargs):
-        if not self.data_entrada:
-            self.data_entrada = datetime.now()

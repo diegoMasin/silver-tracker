@@ -11,4 +11,4 @@ services:
     volumes:
       - .:/usr/src/silvertracker
     env_file:
-      - .env
+      - contrib/.env-docker

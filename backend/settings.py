@@ -154,3 +154,5 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticatedOrReadOnly',
     )
 }
+
+CSRF_TRUSTED_ORIGINS = ['https://localhost:8000'] #erro csrf origins

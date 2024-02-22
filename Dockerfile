@@ -13,3 +13,4 @@ RUN apt-get install -y curl vim
 RUN python -m pip install --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
 RUN python contrib/env_gen.py
+COPY config/settings-docker backend/settings.py
